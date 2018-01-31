@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lap 2</string>
+    <string name="app_name">Lap 3</string>
     <string name="hello_message">Hello World!</string>
     <string name="ButtonText">I\'m a button</string>
     <string name="login">Login</string>
@@ -8,5 +8,6 @@
     <string name="RadioButton">RadioButton</string>
     <string name="CheckBox">Check Box</string>
     <string name="swt">What does this do?</string>
+    <string name="login_btn">Login</string>
 
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bai Tap 2</string>
+    <string name="app_name">Bai Tap 3</string>
     <string name="hello_message">Xin Chào!</string>
     <string name="ButtonText">Tôi Là Button </string>
     <string name="login">Dang Nhap</string>
@@ -8,4 +8,5 @@
     <string name="RadioButton">Nut Radio</string>
     <string name="CheckBox"> Nut CheckBox</string>
     <string name="swt"> Cai Nay De lam gi ?</string>
+    <string name="login_btn">Dang nhap</string>
 </resources>
