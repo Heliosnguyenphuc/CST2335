@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class LoginActivity extends Activity implements View.OnClickListener{
+public class LoginActivity extends Activity{
     protected static final String ACTIVITY_NAME = "StartActivity";
     private Button btn;
     private EditText email;
@@ -28,10 +28,20 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         // take value from sharedPreferences
         email.setText(sharedPreferences.getString("DefaultEmail","email@domain.com"));
 
-        Intent intent = new Intent(LoginActivity.this, StartActivity.class);
-        startActivity(intent);
+          btn.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              String Email_login = email.getText().toString().trim();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("DefaultEmail", Email_login);
+            editor.commit();
+
+              Intent intent = new Intent(LoginActivity.this, StartActivity.class);
+              startActivity(intent);
 
 
+          }
+      });
 
     }
 
@@ -41,16 +51,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 
     }
 
-    // for the button
-    @Override
-    public void onClick(View view) {
-        String Email_login = email.getText().toString().trim();
-        SharedPreferences.Editor editor= sharedPreferences.edit();
-        editor.putString("DefaultEmail",Email_login);
-        editor.commit();
 
-
-    }
 
     @Override
     public void onStart(){
