@@ -9,5 +9,9 @@
     <string name="CheckBox">Check Box</string>
     <string name="swt">What does this do?</string>
     <string name="login_btn">Login</string>
+    <string name="dialog_title"> Warning !!</string>
+    <string name="dialog_message">Do you want to finish this Activity?</string>
+    <string name="ok">Yes</string>
+    <string name="cancel">No</string>
 
 </resources>
