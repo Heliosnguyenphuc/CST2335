@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -100,6 +101,42 @@ public class ListItemsActivity extends Activity {
         }
     }
 
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        Log.i("ACTIVITY_NAME","IN onStart()");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.i("ACTIVITY_NAME","IN onResume()");
+
+    }
+
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.i("ACTIVITY_NAME","IN onPause()");
+
+    }
+
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.i("ACTIVITY_NAME","IN onStop()");
+
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.i("ACTIVITY_NAME","IN  onDestroy()");
+
+    }
 
 
 
