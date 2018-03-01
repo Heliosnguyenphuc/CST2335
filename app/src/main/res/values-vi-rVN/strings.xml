@@ -13,5 +13,7 @@
     <string name="dialog_message">Ban co muon tiep tuc ?</string>
     <string name="ok">Dong Y</string>
     <string name="cancel">Khong</string>
+    <string name="chatbutton"> Chat Không ? </string>
+    <string name="send_btn"> Gữi </string>
 
 </resources>
