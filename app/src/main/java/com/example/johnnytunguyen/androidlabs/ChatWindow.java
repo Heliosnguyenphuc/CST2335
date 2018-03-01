@@ -103,7 +103,7 @@ public class ChatWindow extends Activity {
 
             }
         });
-        
+
     }
 
     @Override

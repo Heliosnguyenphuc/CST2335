@@ -17,7 +17,7 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME ="Messages_Management" ;
     public static final String TABLE_NAME = "Messages";
-    public static final int VERSION_NUM = 1;
+    public static final int VERSION_NUM = 2;
     public static final String KEY_ID ="id";
     public static final String KEY_MESSAGE ="message";
 
