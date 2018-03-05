@@ -60,11 +60,12 @@ public class ChatWindow extends Activity {
 
          dbManager = new ChatDatabaseHelper(this);
 
-        final SQLiteDatabase  db = dbManager.getWritableDatabase();
+         final SQLiteDatabase  db = dbManager.getWritableDatabase();
 
         //take all record to current Array<String>
         // Select All Query
         String selectQuery = "SELECT  * FROM " + dbManager.TABLE_NAME;
+
         Cursor cursor = db.rawQuery(selectQuery,null);
 
         while (cursor.moveToNext())
@@ -83,7 +84,6 @@ public class ChatWindow extends Activity {
             cursor.getColumnName(columnIndex);
             Log.i(ACTIVITY_NAME, "Cursor's column count = " +cursor.getColumnCount());
         }
-
 
 
         // Lab 5 : Writting record
@@ -155,7 +155,6 @@ public class ChatWindow extends Activity {
 
             TextView message = result.findViewById(R.id.message);
             message.setText(   getItem(position)  ); // get the string at position
-
 
             return result;
 
