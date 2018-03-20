@@ -16,5 +16,7 @@
     <string name="chatbutton">Start Chat</string>
     <string name="send_btn"> Send </string>
 
+    <string name="WeatherForecastBTN"> WeatherForecast</string>
+
 
 </resources>
