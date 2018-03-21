@@ -40,7 +40,7 @@ public class WeatherForecast extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_forecast);
         AnhXa();
-        new ForecastQuery().execute(null,null,null);
+        new ForecastQuery().execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=d99666875e0e51521f0040a3d97d0f6a&mode=xml&units=metric");
     }
 
     public void AnhXa(){
@@ -71,7 +71,7 @@ public class WeatherForecast extends Activity {
         protected String doInBackground(String... params) {
             InputStream inputStream = null;
             try {
-                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=d99666875e0e51521f0040a3d97d0f6a&mode=xml&units=metric");
+                URL url = new URL(params[0]);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000 );
                 conn.setConnectTimeout(15000);
@@ -81,50 +81,51 @@ public class WeatherForecast extends Activity {
                 conn.connect();
                 inputStream = conn.getInputStream();
                 XmlPullParser parser = Xml.newPullParser();
-                parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+//                parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
                 parser.setInput(inputStream, null);
 
-                int eventType = parser.getEventType();
-                String text = null;
+                int eventType = parser.next();
                 while (eventType != XmlPullParser.END_DOCUMENT) {
+                    if (parser.getEventType() != XmlPullParser.START_TAG) {
+                        continue;
+                    }
 
-                    switch (eventType){
-                        case XmlPullParser.START_TAG:
-                            break;
-                        case XmlPullParser.TEXT:
-                            text =parser.getText();
-                            break;
-                        case XmlPullParser.END_TAG:
-                         if (text.equalsIgnoreCase("temperature")){
-                             currentTemp1 = parser.getAttributeValue(null,"value");
+                    if (parser.getName().equalsIgnoreCase("temperature")){
+                              currentTemp1 = parser.getAttributeValue(null,"value");
                              publishProgress(25);
-                             minTemp1 = parser.getAttributeValue(null, "min");
+                            minTemp1 = parser.getAttributeValue(null, "min");
                              publishProgress(50);
                              maxTemp1 = parser.getAttributeValue(null, "max");
                              publishProgress(75);
                          }
 
-                         else if (text.equalsIgnoreCase("weather")){
+                    else if (parser.getName().equalsIgnoreCase("weather")){
                              iconFilename = parser.getAttributeValue(null,"icon");
-                             File file = getBaseContext().getFileStreamPath(iconFilename);
-                             if (!file.exists()) {
-                                 saveImage(iconFilename);
-                             } else {
-                                 Log.i(NAME, "Saved icon, " + iconFilename + " is displayed.");
+                             String fileTemp = iconFilename+".png";
+                             File file = getBaseContext().getFileStreamPath(fileTemp);
+                             if (file.exists()) {
+                                 FileInputStream Stream=null;
                                  try {
-                                     FileInputStream in = new FileInputStream(file);
-                                     weatherImage = BitmapFactory.decodeStream(in);
-                                 } catch (FileNotFoundException e) {
-                                     Log.i(NAME, "Saved icon, " + iconFilename + " is not found.");
+                                     Stream = new FileInputStream(file);
+                                 }catch (Exception e){
+                                     e.getMessage();
                                  }
+                                 weatherImage = BitmapFactory.decodeStream(inputStream);
+                                 Log.i(NAME, "Image already exists");
+
+                             } else {
+                                 URL iconUrl = new URL("http://openweathermap.org/img/w/" + iconFilename+".png");
+                                 weatherImage = getImage(iconUrl);
+                                 FileOutputStream outputStream = openFileOutput(iconFilename+ ".png", Context.MODE_PRIVATE);
+                                 weatherImage.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                                 outputStream.flush();
+                                 outputStream.close();
+                                 Log.i(NAME, "Adding new image");
                              }
                              publishProgress(100);
                          }
 
-                    }
-
-                    eventType = parser.next();
-                }
+                    eventType = parser.next();}
 
             } catch (IOException e) {
                 Log.i(NAME, "IOException: " + e.getMessage());
@@ -160,25 +161,23 @@ public class WeatherForecast extends Activity {
 
         }
 
-         private void saveImage(String fname) {
+         private Bitmap getImage(URL url) {
              HttpURLConnection connection = null;
              try {
-                 URL url = new URL("http://openweathermap.org/img/w/"+fname+".png");
+//                 URL url = new URL("url");
                  connection = (HttpURLConnection) url.openConnection();
                  connection.connect();
                  int responseCode = connection.getResponseCode();
                  if (responseCode == 200) {
                      weatherImage = BitmapFactory.decodeStream(connection.getInputStream());
-                     FileOutputStream outputStream = openFileOutput(fname +".png", Context.MODE_PRIVATE);
-                     weatherImage.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-                     outputStream.flush();
-                     outputStream.close();
-                     Log.i(NAME, "Weather icon, " + fname + " is downloaded and displayed.");
-                 } else
-                     Log.i(NAME, "Can't connect to the weather icon for downloading.");
-
+                     return BitmapFactory.decodeStream(connection.getInputStream());
+                 } else {
+                     return null;
+                 }
              } catch (Exception e) {
-                 Log.i(NAME, "weather icon download error: " + e.getMessage());
+                 e.printStackTrace();
+                 return null;
+
              } finally {
                  if (connection != null) {
                      connection.disconnect();
