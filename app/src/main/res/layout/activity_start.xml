@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.johnnytunguyen.androidlabs.StartActivity">
 
     <TextView
@@ -25,14 +26,14 @@
         tools:layout_editor_absoluteY="53dp" />
 
     <Button
-        android:id="@+id/ChatButton"
-        android:text="@string/chatbutton"
+        android:id="@+id/WeatherForecastBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/WeatherForecastBTN" />
 
     <Button
-        android:text="@string/WeatherForecastBTN"
-        android:id="@+id/WeatherForecastBtn"
+        android:id="@+id/ChatButton"
+        android:text="@string/chatbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
