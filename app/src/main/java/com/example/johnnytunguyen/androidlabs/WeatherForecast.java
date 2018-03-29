@@ -112,6 +112,7 @@ public class WeatherForecast extends Activity {
                 XmlPullParser parser = Xml.newPullParser();
                 parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
                 parser.setInput(stream, null);
+
                 int eventType = parser.getEventType();
 
                 while(eventType != XmlPullParser.END_DOCUMENT){

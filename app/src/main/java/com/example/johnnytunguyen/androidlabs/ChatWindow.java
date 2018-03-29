@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import com.example.johnnytunguyen.androidlabs.DataManager.ChatDatabaseHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.johnnytunguyen.androidlabs.LoginActivity.ACTIVITY_NAME;
 
