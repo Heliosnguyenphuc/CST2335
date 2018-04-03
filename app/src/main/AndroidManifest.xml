@@ -5,6 +5,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,20 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".LoginActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".ListItemsActivity">
 
@@ -38,7 +39,8 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".ChatWindow" />
-        <activity android:name=".WeatherForecast"></activity>
+        <activity android:name=".WeatherForecast" />
+        <activity android:name=".MessageDetails"></activity>
     </application>
 
 </manifest>

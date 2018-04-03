@@ -1,8 +1,11 @@
 package com.example.johnnytunguyen.androidlabs;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,11 +13,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.johnnytunguyen.androidlabs.DataManager.ChatDatabaseHelper;
 
@@ -29,6 +35,9 @@ public class ChatWindow extends Activity {
     EditText edt;
     ArrayList<String> messages;
     ChatDatabaseHelper dbManager;
+    Boolean isTablet;
+    ChatAdapter messageAdapter;
+    int REQUEST_CODE = 6666;
 
 
     @Override
@@ -42,23 +51,86 @@ public class ChatWindow extends Activity {
         edt= findViewById(R.id.chatBoxes);
         messages = new ArrayList<>();
 
+        View frameForTablet = findViewById(R.id.isTablet);
 
 
-        // logic there
+        //lab 7
 
+        if(frameForTablet == null){
+            isTablet = false;
+            Log.i(ACTIVITY_NAME, "Using phone layout");
+        }
+        else{
+            isTablet = true;
+            Log.i(ACTIVITY_NAME, "Using tablet layout");
+        }
 
 
         //in this case, “this” is the ChatWindow, which is-A Context object
-         final ChatAdapter messageAdapter = new ChatAdapter( this );
+        messageAdapter  = new ChatAdapter( this );
         chatV.setAdapter (messageAdapter);
 
+
+
+        //lab7
+        final FragmentManager manager = getFragmentManager();
+
+        chatV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                String selectQuery = "SELECT  * FROM " + dbManager.TABLE_NAME;
+
+                Cursor cursor = dbManager.getData(selectQuery);
+
+                //cursor.moveToFirst();
+                Log.e("pos",l+"");
+                cursor.moveToPosition(i);
+                int id = (int) l;
+                String message = cursor.getString(cursor.getColumnIndex(dbManager.KEY_MESSAGE));
+                //long id = messageAdapter.getItemId((int) l);
+
+
+                if(isTablet)
+                {
+                    Log.e("IsTablle","on the tablet");
+                    //Landscape
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", id);
+                    bundle.putString("message", message);
+                    MessageFragment mfragment = new MessageFragment();
+                    mfragment.setArguments(bundle);
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.isTablet, mfragment);
+                    transaction.commit();
+                }
+                else {
+                    Log.e("IsTablle","on the phone");
+                    //Goes to new activity created
+                    Intent intent = new Intent(ChatWindow.this, MessageDetails.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", id);
+                    bundle.putString("message", message);
+
+                    intent.putExtras(bundle);
+
+                    //add fragment to the phone layout
+
+                    startActivityForResult(intent,REQUEST_CODE);
+
+                }
+
+
+            }
+        });
 
 
         // Lab 5: Reading record
 
          dbManager = new ChatDatabaseHelper(this);
 
-         final SQLiteDatabase  db = dbManager.getWritableDatabase();
+         final SQLiteDatabase  db = dbManager.getReadableDatabase();
 
         //take all record to current Array<String>
         // Select All Query
@@ -92,6 +164,7 @@ public class ChatWindow extends Activity {
                 messages.add(data);
                 messageAdapter.notifyDataSetChanged();
                 //Insert the new message into the database, contentValues object will put the new message
+
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(dbManager.KEY_MESSAGE,edt.getText().toString());
 
@@ -102,7 +175,16 @@ public class ChatWindow extends Activity {
             }
         });
 
+
+
+
+
+
     }
+
+
+
+
 
     @Override
     protected void onDestroy() {
@@ -115,6 +197,8 @@ public class ChatWindow extends Activity {
         public ChatAdapter(Context ctx) {
             super(ctx, 0);
         }
+
+
 
         @Override
         public int getCount() {
@@ -131,7 +215,7 @@ public class ChatWindow extends Activity {
 
         @Override
         public long getItemId(int position) {
-            return super.getItemId(position);
+            return position;
         }
 
 
@@ -152,9 +236,25 @@ public class ChatWindow extends Activity {
             //anh xa
 
             TextView message = result.findViewById(R.id.message);
-            message.setText(   getItem(position)  ); // get the string at position
+            message.setText( getItem(position)  ); // get the string at position
 
             return result;
+
+        }
+
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (REQUEST_CODE==requestCode && requestCode ==RESULT_OK && data != null)
+        {
+            String pos= data.getStringExtra("message");
+            messages.remove(pos);
+            messageAdapter.notifyDataSetChanged();
+            Toast.makeText(this,messages+"was delete",Toast.LENGTH_SHORT).show();
 
         }
     }

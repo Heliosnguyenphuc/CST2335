@@ -55,4 +55,12 @@ public class ChatDatabaseHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         super.onDowngrade(db, oldVersion, newVersion);
     }
+
+
+    //get database by select statement, return the cusor
+    public Cursor getData(String query){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(query,null);
+    }
+
 }
