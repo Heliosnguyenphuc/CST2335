@@ -14,6 +14,8 @@ import android.widget.TextView;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Text;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by johnnytunguyen on 2018-04-01.
  */
@@ -41,15 +43,12 @@ public class MessageFragment extends Fragment {
          listViewChat = getActivity().findViewById(R.id.chatView);
 
 
-
         final Bundle bundle = getArguments();
         final int currentId = bundle.getInt("id");
 
         if (bundle != null )
 
         {
-
-
             tv1.setText(bundle.getString("message"));
              tv2.setText(String.valueOf(bundle.getInt("id")));
 
@@ -63,11 +62,10 @@ public class MessageFragment extends Fragment {
                 // to delete the message
                 Intent temp = new Intent();
                 temp.putExtra("message",tv1.getText().toString());
-                getActivity().setResult(Activity.RESULT_OK,temp);
+                getActivity().setResult(RESULT_OK,temp);
+                getActivity().finish();
             }
         });
-
-
 
         return view;
 

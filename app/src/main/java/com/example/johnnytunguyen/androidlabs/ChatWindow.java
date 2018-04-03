@@ -176,14 +176,7 @@ public class ChatWindow extends Activity {
         });
 
 
-
-
-
-
-    }
-
-
-
+    }// end on create
 
 
     @Override
@@ -249,13 +242,17 @@ public class ChatWindow extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (REQUEST_CODE==requestCode && requestCode ==RESULT_OK && data != null)
+        if (requestCode==6666 && resultCode == RESULT_OK )
         {
+
             String pos= data.getStringExtra("message");
             messages.remove(pos);
             messageAdapter.notifyDataSetChanged();
-            Toast.makeText(this,messages+"was delete",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"this is the Sample",Toast.LENGTH_LONG).show();
 
+        }else {
+            Toast.makeText(this,"ERRRORRRR "+requestCode ,Toast.LENGTH_SHORT).show();
         }
+        super.onActivityResult(requestCode,resultCode,data);
     }
 }
