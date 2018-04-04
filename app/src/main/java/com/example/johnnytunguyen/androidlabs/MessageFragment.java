@@ -66,14 +66,17 @@ public class MessageFragment extends Fragment {
                     temp.putExtra("message", tv1.getText().toString());
                     getActivity().setResult(RESULT_OK, temp);
                     getActivity().finish();
-                }//if is on the
+                }else{//if is on the
+
+
+
 
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = manager.beginTransaction();
                 MessageFragment messageFragment = (MessageFragment) getFragmentManager().findFragmentByTag("FragmentOnTablet");
                 fragmentTransaction.remove(messageFragment);
                 fragmentTransaction.commit();
-                Toast.makeText(getActivity(),"Have fun with tablet mode",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Have fun with tablet mode",Toast.LENGTH_LONG).show();}
             }
         });
         return view;

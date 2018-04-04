@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_one"
+        android:icon="@drawable/add"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:title="One" />
+
+    <item
+        android:id="@+id/action_two"
+        android:icon="@drawable/back"
+        android:orderInCategory="201"
+        android:title="Two"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_three"
+        android:icon="@drawable/newmessage"
+        android:orderInCategory="301"
+        app:showAsAction="always"
+        android:title="Three" />
+
+    <item
+        android:id="@+id/action_four"
+        android:orderInCategory="401"
+        app:showAsAction="never"
+        android:title="About"/>
+
+
+</menu>

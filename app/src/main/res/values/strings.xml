@@ -17,6 +17,8 @@
     <string name="send_btn"> Send </string>
 
     <string name="WeatherForecastBTN"> WeatherForecast</string>
+    <string name="title_activity_test_toolbar">TestToolbar</string>
 
+    <string name="newMessage">New Message</string>
 
 </resources>
