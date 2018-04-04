@@ -54,6 +54,7 @@ public class ChatWindow extends Activity {
         View frameForTablet = findViewById(R.id.isTablet);
 
 
+
         //lab 7
 
         if(frameForTablet == null){
@@ -75,9 +76,11 @@ public class ChatWindow extends Activity {
         //lab7
         final FragmentManager manager = getFragmentManager();
 
+
         chatV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
 
 
                 String selectQuery = "SELECT  * FROM " + dbManager.TABLE_NAME;
@@ -95,15 +98,20 @@ public class ChatWindow extends Activity {
                 if(isTablet)
                 {
                     Log.e("IsTablle","on the tablet");
-                    //Landscape
+
                     Bundle bundle = new Bundle();
                     bundle.putInt("id", id);
                     bundle.putString("message", message);
+                    bundle.putBoolean("FLAG",isTablet);
                     MessageFragment mfragment = new MessageFragment();
-                    mfragment.setArguments(bundle);
                     FragmentTransaction transaction = manager.beginTransaction();
-                    transaction.replace(R.id.isTablet, mfragment);
+                    transaction.add(R.id.isTablet, mfragment,"FragmentOnTablet");
+                    mfragment.setArguments(bundle);
                     transaction.commit();
+
+//
+//                    messages.remove(message);
+//                    messageAdapter.notifyDataSetChanged();
                 }
                 else {
                     Log.e("IsTablle","on the phone");
@@ -112,9 +120,8 @@ public class ChatWindow extends Activity {
                     Bundle bundle = new Bundle();
                     bundle.putInt("id", id);
                     bundle.putString("message", message);
-
+                    bundle.putBoolean("FLAG",isTablet);
                     intent.putExtras(bundle);
-
                     //add fragment to the phone layout
 
                     startActivityForResult(intent,REQUEST_CODE);
@@ -124,6 +131,10 @@ public class ChatWindow extends Activity {
 
             }
         });
+
+
+
+
 
 
         // Lab 5: Reading record
@@ -225,19 +236,14 @@ public class ChatWindow extends Activity {
             else
                 result = inflater.inflate(R.layout.chat_row_outgoing, null);
 
-
             //anh xa
-
             TextView message = result.findViewById(R.id.message);
             message.setText( getItem(position)  ); // get the string at position
-
             return result;
-
         }
 
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -255,4 +261,12 @@ public class ChatWindow extends Activity {
         }
         super.onActivityResult(requestCode,resultCode,data);
     }
+
+
+
+
+
+
+
+
 }

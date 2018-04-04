@@ -30,6 +30,7 @@
 
     <Button
         android:id="@+id/BtndeleteFragment"
+        android:onClick="removeFragment"
         android:text="Delete Message"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"

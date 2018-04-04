@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 public class MessageDetails extends Activity {
 
@@ -25,10 +26,12 @@ public class MessageDetails extends Activity {
         MessageFragment messageFragment = new MessageFragment();
         messageFragment.setArguments(temp);
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.frameHolder, messageFragment );
+        transaction.add(R.id.frameHolder, messageFragment);
         transaction.commit();
 
     }
+
+
 
 
 

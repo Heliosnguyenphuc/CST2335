@@ -14,6 +14,7 @@ public class StartActivity extends Activity {
     Button btn, btn2,btn3;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
