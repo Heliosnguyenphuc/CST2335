@@ -11,7 +11,7 @@ import android.widget.Toast;
 import static com.example.johnnytunguyen.androidlabs.LoginActivity.ACTIVITY_NAME;
 
 public class StartActivity extends Activity {
-    Button btn, btn2,btn3;
+    Button btn, btn2,btn3,btn4;
 
 
 
@@ -57,6 +57,14 @@ public class StartActivity extends Activity {
             }
         });
 
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this,TestToolbar.class);
+                startActivity(intent);
+            }
+        });
+
 
 
     }// end in on create
@@ -65,6 +73,7 @@ public class StartActivity extends Activity {
         btn2 = findViewById(R.id.ChatButton);
         btn = findViewById(R.id.button);
         btn3= findViewById(R.id.WeatherForecastBtn);
+        btn4 = findViewById(R.id.buttonToolbar);
     }
 
 
