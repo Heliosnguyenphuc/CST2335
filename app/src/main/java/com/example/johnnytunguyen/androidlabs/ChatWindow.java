@@ -33,10 +33,10 @@ public class ChatWindow extends Activity {
     ListView chatV;
     Button btn;
     EditText edt;
-    ArrayList<String> messages;
+    public static ArrayList<String> messages;
     ChatDatabaseHelper dbManager;
     Boolean isTablet;
-    ChatAdapter messageAdapter;
+   ChatAdapter messageAdapter ;
     int REQUEST_CODE = 6666;
 
 
@@ -64,6 +64,9 @@ public class ChatWindow extends Activity {
         else{
             isTablet = true;
             Log.i(ACTIVITY_NAME, "Using tablet layout");
+
+
+
         }
 
 
@@ -83,7 +86,7 @@ public class ChatWindow extends Activity {
 
 
 
-                String selectQuery = "SELECT  * FROM " + dbManager.TABLE_NAME;
+                String selectQuery = "SELECT  * FROM " + ChatDatabaseHelper.TABLE_NAME;
 
                 Cursor cursor = dbManager.getData(selectQuery);
 
@@ -91,7 +94,7 @@ public class ChatWindow extends Activity {
                 Log.e("pos",l+"");
                 cursor.moveToPosition(i);
                 int id = (int) l;
-                String message = cursor.getString(cursor.getColumnIndex(dbManager.KEY_MESSAGE));
+                String message = cursor.getString(cursor.getColumnIndex(ChatDatabaseHelper.KEY_MESSAGE));
                 //long id = messageAdapter.getItemId((int) l);
 
 
@@ -110,8 +113,6 @@ public class ChatWindow extends Activity {
                     transaction.commit();
 
 //
-//                    messages.remove(message);
-//                    messageAdapter.notifyDataSetChanged();
                 }
                 else {
                     Log.e("IsTablle","on the phone");
@@ -145,14 +146,14 @@ public class ChatWindow extends Activity {
 
         //take all record to current Array<String>
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + dbManager.TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + ChatDatabaseHelper.TABLE_NAME;
 
         Cursor cursor = db.rawQuery(selectQuery,null);
 
         while (cursor.moveToNext())
 
         {
-            String newMessage = cursor.getString(cursor.getColumnIndex(dbManager.KEY_MESSAGE));
+            String newMessage = cursor.getString(cursor.getColumnIndex(ChatDatabaseHelper.KEY_MESSAGE));
             messages.add(newMessage);
             Log.i(ACTIVITY_NAME, "SQL MESSAGE: " + newMessage);
         }
@@ -177,9 +178,9 @@ public class ChatWindow extends Activity {
                 //Insert the new message into the database, contentValues object will put the new message
 
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(dbManager.KEY_MESSAGE,edt.getText().toString());
+                contentValues.put(ChatDatabaseHelper.KEY_MESSAGE,edt.getText().toString());
 
-                long insertCheck = db.insert(dbManager.TABLE_NAME,null,contentValues);
+                long insertCheck = db.insert(ChatDatabaseHelper.TABLE_NAME,null,contentValues);
                 Log.i("StartChat", "insert data result: " + insertCheck);
                 edt.setText("");
 
@@ -261,8 +262,6 @@ public class ChatWindow extends Activity {
         }
         super.onActivityResult(requestCode,resultCode,data);
     }
-
-
 
 
 

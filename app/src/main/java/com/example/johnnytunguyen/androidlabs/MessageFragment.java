@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class MessageFragment extends Fragment {
         final Bundle bundle = getArguments();
         final int currentId = bundle.getInt("id");
         final boolean isTablet = bundle.getBoolean("FLAG");
+        final String item = bundle.getString("message");
 
         if (bundle != null )
 
@@ -69,11 +71,11 @@ public class MessageFragment extends Fragment {
                 }else{//if is on the
 
 
-
-
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = manager.beginTransaction();
                 MessageFragment messageFragment = (MessageFragment) getFragmentManager().findFragmentByTag("FragmentOnTablet");
+                EditText edtMain = getActivity().findViewById(R.id.chatBoxes);
+                ChatWindow.messages.remove(item);
                 fragmentTransaction.remove(messageFragment);
                 fragmentTransaction.commit();
                 Toast.makeText(getActivity(),"Have fun with tablet mode",Toast.LENGTH_LONG).show();}
