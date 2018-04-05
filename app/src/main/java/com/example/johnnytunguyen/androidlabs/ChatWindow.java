@@ -114,6 +114,7 @@ public class ChatWindow extends Activity {
 //                    messageAdapter.notifyDataSetChanged();
                 }
                 else {
+
                     Log.e("IsTablle","on the phone");
                     //Goes to new activity created
                     Intent intent = new Intent(ChatWindow.this, MessageDetails.class);
@@ -127,6 +128,8 @@ public class ChatWindow extends Activity {
                     startActivityForResult(intent,REQUEST_CODE);
 
                 }
+
+                cursor.close();
 
 
             }
@@ -254,7 +257,7 @@ public class ChatWindow extends Activity {
             String pos= data.getStringExtra("message");
             messages.remove(pos);
             messageAdapter.notifyDataSetChanged();
-            Toast.makeText(this,"this is the Sample",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"message was delete ",Toast.LENGTH_LONG).show();
 
         }else {
             Toast.makeText(this,"ERRRORRRR "+requestCode ,Toast.LENGTH_SHORT).show();
