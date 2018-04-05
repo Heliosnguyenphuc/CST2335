@@ -20,5 +20,6 @@
     <string name="title_activity_test_toolbar">TestToolbar</string>
 
     <string name="newMessage">New Message</string>
+    <string name="toolButton">TestToolBar</string>
 
 </resources>
